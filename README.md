@@ -2,7 +2,7 @@
 
 Веб-приложение для управления задачами с полным функционалом.
 
-<https://web-prog-lab-2.onrender.com>
+<https://panindv-web-prog-lab-2.onrender.com>
 
 ## Функциональность
 
