@@ -26,7 +26,7 @@ class TodoApp {
     }
 
     createStyles() {
-        const styles = `
+        const styles = document.createTextNode(`
             * {
                 margin: 0;
                 padding: 0;
@@ -202,6 +202,7 @@ class TodoApp {
                 cursor: pointer;
                 padding: 5px;
                 border-radius: 4px;
+                font-size: 16px;
             }
 
             .btn-edit:hover {
@@ -279,10 +280,10 @@ class TodoApp {
                     font-size: 14px;
                 }
             }
-        `;
+        `);
 
         const styleElement = document.createElement('style');
-        styleElement.textContent = styles;
+        styleElement.appendChild(styles);
         document.head.appendChild(styleElement);
     }
 
@@ -503,7 +504,9 @@ class TodoApp {
         const taskList = document.getElementById('taskList');
         const filteredTasks = this.getFilteredTasks();
         
-        taskList.innerHTML = '';
+        while (taskList.firstChild) {
+            taskList.removeChild(taskList.firstChild);
+        }
         
         if (filteredTasks.length === 0) {
             const emptyState = document.createElement('div');
@@ -552,13 +555,13 @@ class TodoApp {
         
         const editButton = document.createElement('button');
         editButton.className = 'btn-icon btn-edit';
-        editButton.innerHTML = '✏️';
+        editButton.textContent = '✏️';
         editButton.title = 'Редактировать';
         editButton.addEventListener('click', () => this.enableEditMode(taskItem, task));
         
         const deleteButton = document.createElement('button');
         deleteButton.className = 'btn-icon btn-delete';
-        deleteButton.innerHTML = '🗑️';
+        deleteButton.textContent = '🗑️';
         deleteButton.title = 'Удалить';
         deleteButton.addEventListener('click', () => this.deleteTask(task.id));
         
@@ -576,8 +579,10 @@ class TodoApp {
 
     enableEditMode(taskItem, task) {
         const taskContent = taskItem.querySelector('.task-content');
-        const taskText = taskItem.querySelector('.task-text');
-        const taskDate = taskItem.querySelector('.task-date');
+        
+        while (taskContent.firstChild) {
+            taskContent.removeChild(taskContent.firstChild);
+        }
         
         const textInput = document.createElement('input');
         textInput.type = 'text';
@@ -589,7 +594,6 @@ class TodoApp {
         dateInput.className = 'edit-input';
         dateInput.value = task.date;
         
-        taskContent.innerHTML = '';
         taskContent.appendChild(textInput);
         taskContent.appendChild(dateInput);
         
